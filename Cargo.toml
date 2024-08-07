@@ -1,0 +1,28 @@
+[package]
+name = "kzg-blst"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+rust-kzg-blst = { git = "https://github.com/sifraitech/rust-kzg", rev = "c34b73916af9b8a699a74bd0186f82f25e72861c", default-features = false }
+derive_more = "0.99.18"
+kzg = { git = "https://github.com/sifraitech/rust-kzg", rev = "c34b73916af9b8a699a74bd0186f82f25e72861c", default-features = false }
+spin = "0.9.7"
+tracing = { version = "0.1.40", default-features = false }
+parking_lot = "0.12.2"
+serde = { version = "1.0.203", optional = true, features = ["alloc", "derive"] }
+serde_arrays = { version = "0.1.0", optional = true }
+hex = { version = "0.4.3", default-features = false, features = ["alloc"] }
+rand = { version = "0.8.5", features = ["min_const_gen"] }
+
+[features]
+default = ["embedded-kzg-settings", "serde"]
+
+embedded-kzg-settings = []
+
+serde = [
+    "dep:serde",
+    # TODO: `serde_arrays` doesn't support `no_std` right now: https://github.com/Kromey/serde_arrays/issues/8
+    "dep:serde_arrays",
+    "hex/serde",
+]
